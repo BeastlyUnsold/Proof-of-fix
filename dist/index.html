@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Parcel1 Sandbox</title>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="/src.f10117fe.css"></head>
+
+  <body>
+    <nav class="nav">
+      <a onclick="navigateToAppOne()">Application One</a>
+      <a onclick="navigateToAppTwo()">Application Two</a>
+    </nav>
+    <div id="steps">
+      <h1>Single Spa Unmounting parcel error</h1>
+      <ol>
+        <li>
+          Launch App One and incorporate a parcel by selecting the corresponding
+          button within the application.
+        </li>
+
+        <li>
+          Engage the button on the parcel's UI to initiate its disengagement,
+          followed by a switch to App 2. This mirrors a single-spa parcel
+          exhibited in a modal format. Closing the modal triggers the unmount
+          function in the single-spa react framework and prompts a navigation
+          change in the app's logic.
+        </li>
+
+        <li>
+          Pay attention to any anomalies when unmounting the parcel, especially
+          if it indicates that the parcel is already in the process of
+          unmounting.
+        </li>
+      </ol>
+    </div>
+    <hr>
+    <div id="applicationOne"></div>
+    <div id="applicationTwo"></div>
+    <div id="parcel-node"></div>
+
+    <script src="/src.f10117fe.js"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+diff --git a/node_modules/single-spa/lib/es2015/esm/single-spa.dev.js b/node_modules/single-spa/lib/es2015/esm/single-spa.dev.js
+index 9ddb2a7..cbaa434 100644
+--- a/node_modules/single-spa/lib/es2015/esm/single-spa.dev.js
++++ b/node_modules/single-spa/lib/es2015/esm/single-spa.dev.js
+@@ -496,28 +496,35 @@ function mountParcel(config, customProps) {
+     status: passedConfigLoadingFunction ? LOADING_SOURCE_CODE : NOT_BOOTSTRAPPED,
+     customProps,
+     parentName: toName(owningAppOrParcel),
+-
++    internalUnmountPromise: undefined,
+     unmountThisParcel() {
+-      return mountPromise.then(() => {
+-        if (parcel.status !== MOUNTED) {
+-          throw Error(formatErrorMessage(6, `Cannot unmount parcel '${name}' -- it is in a ${parcel.status} status`, name, parcel.status));
+-        }
++      if (parcel.status === UNMOUNTING && !!parcel.internalUnmountPromise) {
++        return parcel.internalUnmountPromise
++      } else {
+ 
+-        return toUnmountPromise(parcel, true);
+-      }).then(value => {
+-        if (parcel.parentName) {
+-          delete owningAppOrParcel.parcels[parcel.id];
+-        }
++        const unmountPromise = mountPromise.then(() => {
++          if (parcel.status !== MOUNTED) {
++            throw Error(formatErrorMessage(6, `Cannot unmount parcel '${name}' -- it is in a ${parcel.status} status`, name, parcel.status));
++          }
+ 
+-        return value;
+-      }).then(value => {
+-        resolveUnmount(value);
+-        return value;
+-      }).catch(err => {
+-        parcel.status = SKIP_BECAUSE_BROKEN;
+-        rejectUnmount(err);
+-        throw err;
+-      });
++          return toUnmountPromise(parcel, true);
++        }).then(value => {
++          if (parcel.parentName) {
++            delete owningAppOrParcel.parcels[parcel.id];
++          }
++
++          return value;
++        }).then(value => {
++          resolveUnmount(value);
++          return value;
++        }).catch(err => {
++          parcel.status = SKIP_BECAUSE_BROKEN;
++          rejectUnmount(err);
++          throw err;
++        });
++        parcel.internalUnmountPromise = unmountPromise
++        return unmountPromise
++      }
+     }
+ 
+   }; // We return an external representation
