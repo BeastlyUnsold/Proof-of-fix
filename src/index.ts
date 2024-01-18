@@ -1,5 +1,9 @@
 import "./styles.css";
-import { registerApplication, start, navigateToUrl } from "single-spa/lib/es2015/esm/single-spa.dev.js";
+import {
+  registerApplication,
+  start,
+  navigateToUrl,
+} from "single-spa/lib/es2015/esm/single-spa.dev.js";
 // some setup stuff that can mostly be ignored
 const appOneNode = document.getElementById("applicationOne");
 const appTwoNode = document.getElementById("applicationTwo");
@@ -84,7 +88,7 @@ const parcel = {
   unmount: () => {
     // add an arbitrary delay here to make the bug more visible
     return new Promise((r) => {
-      return setTimeout(r, 1100);
+      return setTimeout(r, 500);
     }).then(() => {
       if (parcelNode) {
         parcelNode.innerHTML = ``;

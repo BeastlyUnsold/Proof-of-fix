@@ -6,6 +6,7 @@
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
+    "prettier": "prettier ./src --write",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "single-spa": "6.0.0"
   },
   "devDependencies": {
+    "prettier": "3.2.4",
     "typescript": "4.4.4"
   },
   "resolutions": {
